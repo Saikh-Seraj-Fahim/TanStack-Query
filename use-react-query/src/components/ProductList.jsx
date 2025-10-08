@@ -1,8 +1,25 @@
 import axios from 'axios'
 import { useQuery } from '@tanstack/react-query'
 
-const retrieveProducts = async () => {
-    const response = await axios.get('http://localhost:3000/products');
+
+// const retrieveProducts = async () => {
+//     const response = await axios.get('http://localhost:3000/products');
+//     return response.data;
+// }
+
+
+// useQuery() theke jokhon function ta call hoi, tokhon 1 ta object (obj) pass hoi.
+
+// const retrieveProducts = async (obj) => {
+//     console.log(obj);
+//     const response = await axios.get('http://localhost:3000/products}');
+//     return response.data;
+// }
+
+
+const retrieveProducts = async ({ queryKey }) => {
+    const response = await axios.get(`http://localhost:3000/${queryKey[0]}`);
+    // jei API endpoint niye kaj korbo(/products) and queryKey er name o jodi same thake tahole evabe likha jabe.
     return response.data;
 }
 
@@ -10,6 +27,7 @@ export default function ProductList() {
     const { data: products, error, isLoading } = useQuery({
         queryKey: ["products"], // return kora result ta products er moddhe cache kora thakbe.
         queryFn: retrieveProducts,
+        retry: false
     });
 
     if (isLoading) {
@@ -44,4 +62,4 @@ export default function ProductList() {
 }
 
 
-// see after 36 minute.
+// see after 48 minute 35 second.
