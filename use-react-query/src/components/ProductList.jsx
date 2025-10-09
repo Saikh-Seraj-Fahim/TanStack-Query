@@ -27,7 +27,13 @@ export default function ProductList() {
     const { data: products, error, isLoading } = useQuery({
         queryKey: ["products"], // return kora result ta products er moddhe cache kora thakbe.
         queryFn: retrieveProducts,
-        retry: false
+        retry: false,
+        staleTime: 5000, // 5 second por server theke ar data fetch korbe na. tokhon puraton data e dekhabe.
+        refetchInterval: 1000, // 1 second por por cache er data delete kore server theke new data fetch korbe
+        // refetchInterval: () => {
+        //     // if network===4G
+        //     return 2000;
+        // }
     });
 
     if (isLoading) {
@@ -62,4 +68,4 @@ export default function ProductList() {
 }
 
 
-// see after 48 minute 35 second.
+// see after 54 minutes 20 second.
